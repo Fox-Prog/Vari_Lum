@@ -1,0 +1,512 @@
+// Lumière de Gauche // 1=bas; 4=haut
+static int G1=6;
+static int G2=7;
+static int G3=8;
+static int G4=9;
+
+// Lumière de Droite // 1=bas; 4=haut
+static int D1=2;
+static int D2=3;
+static int D3=4;
+static int D4=5;
+
+// Capteur // 1=bas; 4=haut
+static int cpt1=13;
+static int cpt2=12;
+static int cpt3=11;
+static int cpt4=10;
+
+static int BP=A2;
+int EBP;
+
+// Gestion
+int dtc1;   int dtc2;   int dtc3;   int dtc4;
+int M1;   int M2;   int M3;   int M4;
+int VM;   int Select;   int MF;   int SMF;
+
+int DLR;
+int DL=50;
+int NbrDL=15;
+int DLS=50;
+int EM=600;
+
+// Tableau
+char RD[8]={G1,G2,G3,G4,D1,D2,D3,D4};
+
+void setup() {
+
+pinMode(G1,OUTPUT);
+pinMode(G2,OUTPUT);
+pinMode(G3,OUTPUT);
+pinMode(G4,OUTPUT);
+
+pinMode(D1,OUTPUT);
+pinMode(D2,OUTPUT);
+pinMode(D3,OUTPUT);
+pinMode(D4,OUTPUT);
+
+pinMode(cpt1,INPUT);
+pinMode(cpt2,INPUT);
+pinMode(cpt3,INPUT);
+pinMode(cpt4,INPUT);
+pinMode(BP,INPUT);
+
+Start();
+
+}
+
+void loop() {
+// Initial // // Initial //
+  digitalWrite(G1,LOW);      
+  digitalWrite(D1,LOW);
+  digitalWrite(G2,LOW);      
+  digitalWrite(D2,LOW);
+  digitalWrite(G3,LOW);       
+  digitalWrite(D3,LOW);
+  digitalWrite(G4,LOW);       
+  digitalWrite(D4,LOW);
+// Initial // // Initial //
+
+// Détection // // Détection //
+
+dtc1= digitalRead(cpt1);
+dtc2= digitalRead(cpt2);
+dtc3= digitalRead(cpt3);
+dtc4= digitalRead(cpt4);
+EBP= analogRead(BP);
+
+// Détection // // Détection //
+
+// Reset // // Reset //
+M1=0;   M2=0;   M3=0;   M4=0;
+VM=0;
+// Reset // // Reset //
+
+if(dtc1==0){
+  while(dtc1==0){
+    dtc1= digitalRead(cpt1);
+    M1++;
+    delay(DL);
+    if(M1==NbrDL){
+      M1=0;
+      Menu1();
+    }
+  }
+}
+
+
+if(dtc2==0){
+  while(dtc2==0){
+    dtc2= digitalRead(cpt2);
+    M2++;
+    delay(DL);
+    if(M2==NbrDL){
+      M2=0;
+      Menu2();
+    }
+  }
+}
+
+if(dtc3==0){
+  while(dtc3==0){
+    dtc3= digitalRead(cpt3);
+    M3++;
+    delay(DL);
+    if(M3==NbrDL){
+      M3=0;
+      Menu3();
+    }
+  }
+}
+
+if(dtc4==0){
+  while(dtc4==0){
+    dtc4= digitalRead(cpt4);
+    M4++;
+    delay(DL);
+    if(M4==NbrDL){
+      M4=0;
+      Menu4();
+    }
+  }
+}
+
+if(EBP==0){
+  MF=1;
+  MarcheForce();
+}
+}
+
+void Menu1(){
+  
+VM=1;
+while(VM==1){
+dtc1= digitalRead(cpt1);
+dtc2= digitalRead(cpt2);
+dtc3= digitalRead(cpt3);
+dtc4= digitalRead(cpt4);
+  if(dtc1==0){
+    M1=0;
+  digitalWrite(G1,HIGH);      
+  digitalWrite(D1,HIGH);
+  digitalWrite(G2,LOW);      
+  digitalWrite(D2,LOW);
+  digitalWrite(G3,LOW);       
+  digitalWrite(D3,LOW);
+  digitalWrite(G4,LOW);       
+  digitalWrite(D4,LOW);
+  while(dtc1==0){
+    dtc1= digitalRead(cpt1);
+    M1++;
+    delay(DL);
+    if(M1==NbrDL){
+      M1=0;
+  digitalWrite(G1,LOW);      
+  digitalWrite(D1,LOW);
+      VM=0;
+    }
+  }
+  }
+ 
+  
+  if(dtc2==0){
+  digitalWrite(G1,HIGH);      
+  digitalWrite(D1,HIGH);
+  digitalWrite(G2,HIGH);      
+  digitalWrite(D2,HIGH);
+  digitalWrite(G3,LOW);      
+  digitalWrite(D3,LOW);
+  digitalWrite(G4,LOW);       
+  digitalWrite(D4,LOW);
+  }
+
+
+   if(dtc3==0){
+  digitalWrite(G1,HIGH);       
+  digitalWrite(D1,HIGH);
+  digitalWrite(G2,HIGH);       
+  digitalWrite(D2,HIGH);
+  digitalWrite(G3,HIGH);       
+  digitalWrite(D3,HIGH);
+  digitalWrite(G4,LOW);        
+  digitalWrite(D4,LOW);
+  }
+
+
+    if(dtc4==0){
+  digitalWrite(G1,HIGH);       
+  digitalWrite(D1,HIGH);
+  digitalWrite(G2,HIGH);      
+  digitalWrite(D2,HIGH);
+  digitalWrite(G3,HIGH);       
+  digitalWrite(D3,HIGH);
+  digitalWrite(G4,HIGH);      
+  digitalWrite(D4,HIGH);
+  } 
+}
+}
+
+void Menu2(){
+ 
+  VM=1;
+  while(VM==1){
+    dtc2= digitalRead(cpt2);
+    dtc3= digitalRead(cpt3);
+    if(dtc2==0){
+      digitalWrite(G1,HIGH);
+      digitalWrite(G2,HIGH);
+      digitalWrite(G3,HIGH);
+      digitalWrite(G4,HIGH);
+      digitalWrite(D1,LOW);
+      digitalWrite(D2,LOW);
+      digitalWrite(D3,LOW);
+      digitalWrite(D4,LOW);
+  while(dtc2==0){
+    dtc2= digitalRead(cpt2);
+    M2++;
+    delay(DL);
+    if(M2==NbrDL){
+      digitalWrite(G1,LOW);
+      digitalWrite(G2,LOW);
+      digitalWrite(G3,LOW);
+      digitalWrite(G4,LOW);
+      M2=0;
+      
+      VM=0;
+    }
+  }
+}
+      if(dtc3==0){
+      digitalWrite(G1,LOW);
+      digitalWrite(G2,LOW);
+      digitalWrite(G3,LOW);
+      digitalWrite(G4,LOW);
+      digitalWrite(D1,HIGH);
+      digitalWrite(D2,HIGH);
+      digitalWrite(D3,HIGH);
+      digitalWrite(D4,HIGH);
+      }
+  }
+}
+
+void Menu3(){
+  
+  VM=1;
+  while(VM==1){
+    dtc3= digitalRead(cpt3);
+  digitalWrite(G1,HIGH);
+  digitalWrite(D1,HIGH);
+  digitalWrite(G4,HIGH);
+  digitalWrite(D4,HIGH);
+  if(dtc3==0){
+      while(dtc3==0){
+    dtc3= digitalRead(cpt3);
+    M3++;
+    delay(DL);
+    if(M3==NbrDL){
+      M3=0;
+  digitalWrite(G1,LOW);
+  digitalWrite(D1,LOW);
+  digitalWrite(G4,LOW);
+  digitalWrite(D4,LOW);
+      VM=0;
+    }
+  }
+  }
+  }
+  
+  
+}
+
+void Menu4(){
+ 
+  VM=1;
+  while(VM==1){
+dtc1= digitalRead(cpt1);
+dtc2= digitalRead(cpt2);
+dtc3= digitalRead(cpt3);
+dtc4= digitalRead(cpt4);
+    if(dtc1==0){
+  digitalWrite(G1,HIGH);       
+  digitalWrite(D1,HIGH);
+  digitalWrite(G2,HIGH);       
+  digitalWrite(D2,HIGH);
+  digitalWrite(G3,HIGH);       
+  digitalWrite(D3,HIGH);
+  digitalWrite(G4,HIGH);      
+  digitalWrite(D4,HIGH);
+  }
+ 
+  
+  if(dtc2==0){
+  digitalWrite(G1,LOW);        
+  digitalWrite(D1,LOW);
+  digitalWrite(G2,HIGH);      
+  digitalWrite(D2,HIGH);
+  digitalWrite(G3,HIGH);       
+  digitalWrite(D3,HIGH);
+  digitalWrite(G4,HIGH);       
+  digitalWrite(D4,HIGH);
+  }
+
+
+   if(dtc3==0){
+  digitalWrite(G1,LOW);        
+  digitalWrite(D1,LOW);
+  digitalWrite(G2,LOW);        
+  digitalWrite(D2,LOW);
+  digitalWrite(G3,HIGH);       
+  digitalWrite(D3,HIGH);
+  digitalWrite(G4,HIGH);       
+  digitalWrite(D4,HIGH);
+  }
+
+
+    if(dtc4==0){
+      M4=0;
+  digitalWrite(G1,LOW);       
+  digitalWrite(D1,LOW);
+  digitalWrite(G2,LOW);        
+  digitalWrite(D2,LOW);
+  digitalWrite(G3,LOW);      
+  digitalWrite(D3,LOW);
+  digitalWrite(G4,HIGH);      
+  digitalWrite(D4,HIGH);
+    while(dtc4==0){
+    dtc4= digitalRead(cpt4);
+    M4++;
+    delay(DL);
+    if(M4==NbrDL){
+      M4=0;
+  digitalWrite(G4,LOW);      
+  digitalWrite(D4,LOW);
+      VM=0;
+    }
+  }
+  }
+  }
+}
+
+void MarcheForce(){
+  VM=1;
+delay(EM);
+while(VM==1){
+  if(MF==1){
+digitalWrite(G1,LOW);
+digitalWrite(G2,LOW);
+digitalWrite(G3,LOW);
+digitalWrite(G4,HIGH);
+digitalWrite(D1,LOW);
+digitalWrite(D2,LOW);
+digitalWrite(D3,LOW);
+digitalWrite(D4,HIGH);
+}
+if(MF==2){
+digitalWrite(G1,LOW);
+digitalWrite(G2,LOW);
+digitalWrite(G3,HIGH);
+digitalWrite(G4,HIGH);
+digitalWrite(D1,LOW);
+digitalWrite(D2,LOW);
+digitalWrite(D3,HIGH);
+digitalWrite(D4,HIGH);
+}
+if(MF==3){
+digitalWrite(G1,LOW);
+digitalWrite(G2,HIGH);
+digitalWrite(G3,HIGH);
+digitalWrite(G4,HIGH);
+digitalWrite(D1,LOW);
+digitalWrite(D2,HIGH);
+digitalWrite(D3,HIGH);
+digitalWrite(D4,HIGH);
+}
+if(MF==4){
+digitalWrite(G1,HIGH);
+digitalWrite(G2,HIGH);
+digitalWrite(G3,HIGH);
+digitalWrite(G4,HIGH);
+digitalWrite(D1,HIGH);
+digitalWrite(D2,HIGH);
+digitalWrite(D3,HIGH);
+digitalWrite(D4,HIGH);
+}
+if(MF==5){
+digitalWrite(G1,HIGH);
+digitalWrite(G2,HIGH);
+digitalWrite(G3,HIGH);
+digitalWrite(G4,LOW);
+digitalWrite(D1,HIGH);
+digitalWrite(D2,HIGH);
+digitalWrite(D3,HIGH);
+digitalWrite(D4,LOW);
+}
+if(MF==6){
+digitalWrite(G1,HIGH);
+digitalWrite(G2,HIGH);
+digitalWrite(G3,LOW);
+digitalWrite(G4,LOW);
+digitalWrite(D1,HIGH);
+digitalWrite(D2,HIGH);
+digitalWrite(D3,LOW);
+digitalWrite(D4,LOW);
+}
+if(MF==7){
+digitalWrite(G1,HIGH);
+digitalWrite(G2,LOW);
+digitalWrite(G3,LOW);
+digitalWrite(G4,LOW);
+digitalWrite(D1,HIGH);
+digitalWrite(D2,LOW);
+digitalWrite(D3,LOW);
+digitalWrite(D4,LOW);
+}
+if(MF==8){
+digitalWrite(G1,LOW);
+digitalWrite(G2,LOW);
+digitalWrite(G3,LOW);
+digitalWrite(G4,LOW);
+digitalWrite(D1,LOW);
+digitalWrite(D2,LOW);
+digitalWrite(D3,LOW);
+digitalWrite(D4,LOW);
+}
+
+EBP=analogRead(BP);
+if(EBP==0){
+  delay(150);
+  SMF=0;
+  MF++;
+  if(MF==9){
+    MF=1;
+  }
+while(EBP==0){
+  EBP=analogRead(BP);
+  SMF++;
+  delay(DL);
+    if(SMF==NbrDL){
+      VM=0;
+digitalWrite(G1,LOW);
+digitalWrite(G2,LOW);
+digitalWrite(G3,LOW);
+digitalWrite(G4,LOW);
+
+digitalWrite(D1,LOW);
+digitalWrite(D2,LOW);
+digitalWrite(D3,LOW);
+digitalWrite(D4,LOW);
+    }
+}
+}
+}
+}
+
+void Start(){
+digitalWrite(G1,LOW);
+digitalWrite(G2,LOW);
+digitalWrite(G3,LOW);
+digitalWrite(G4,LOW);
+
+digitalWrite(D1,LOW);
+digitalWrite(D2,LOW);
+digitalWrite(D3,LOW);
+digitalWrite(D4,LOW);
+////////////////////////////////////////////////////
+for(int x=0;x<2;x++){
+  digitalWrite(G1,HIGH);
+delay(DLS);
+digitalWrite(G2,HIGH);
+delay(DLS);
+digitalWrite(G1,LOW);
+digitalWrite(G3,HIGH);
+delay(DLS);
+digitalWrite(G2,LOW);
+digitalWrite(G4,HIGH);
+delay(DLS);
+digitalWrite(G3,LOW);
+digitalWrite(D4,HIGH);
+delay(DLS);
+digitalWrite(G4,LOW);
+digitalWrite(D3,HIGH);
+delay(DLS);
+digitalWrite(D4,LOW);
+digitalWrite(D2,HIGH);
+delay(DLS);
+digitalWrite(D3,LOW);
+digitalWrite(D1,HIGH);
+delay(DLS);
+digitalWrite(D2,LOW);
+delay(DLS);
+digitalWrite(D1,LOW);
+}
+//////////////////////////////////////////////:
+digitalWrite(G1,LOW);
+digitalWrite(G2,LOW);
+digitalWrite(G3,LOW);
+digitalWrite(G4,LOW);
+
+digitalWrite(D1,LOW);
+digitalWrite(D1,LOW);
+digitalWrite(D1,LOW);
+digitalWrite(D1,LOW);
+}
